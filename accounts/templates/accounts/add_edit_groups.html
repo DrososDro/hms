@@ -1,0 +1,54 @@
+{% extends "users/admin_panel.html" %}
+{% block admin_panel %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/responsive.css' %}">
+    <!--
+<link rel="stylesheet" href="/static/admin/css/base.css">
+<link rel="stylesheet" href="/static/admin/css/forms.css">
+<link rel="stylesheet" href="{% static 'styles/responsive.css' %}">-->
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static 'js/core.js' %}"></script>
+    <script src="{% static 'js/SelectBox.js' %}"></script>
+    <script src="{% static 'js/actions.js' %}"></script>
+    <script src="{% static 'js/SelectFilter2.js' %}"></script>
+    <!-- Container -->
+    <style>input[name="name"] {text-transform: lowercase;}</style>
+    <div class='pt-5 '>
+        <form method="post" class="cstm_clr bg border rounded-5">
+            <h2 class='text-center'>Groups</h2>
+            {% csrf_token %}
+            <fieldset class="aligned ">
+                <div class="form-row field-name">
+                    <div>
+                        <label class="required" for="id_name">Name:</label>
+                        {{ form.name }}
+                        {% for error in form.name.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
+                    </div>
+                </div>
+                <div class="form-row field-permissions">
+                    <div>
+                        <label for="id_permissions">Permissions:</label>
+                        <div class="related-widget-wrapper" data-model-ref="permission">
+                            <select name="permissions"
+                                    id="id_permissions"
+                                    multiple
+                                    class="selectfilter"
+                                    data-field-name="permissions"
+                                    data-is-stacked="0">
+                                {% for perm in form.permissions %}{{ perm }}{% endfor %}
+                            </select>
+                        </div>
+                        <div class="help">Hold down “Control”, or “Command” on a Mac, to select more than one.</div>
+                    </div>
+                </div>
+                <div class="text-end pt-4">
+                    <a class="btn btn-danger btn-block mb-4"
+                       href="javascript:history.go(-1);">Cancel</a>
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock admin_panel %}

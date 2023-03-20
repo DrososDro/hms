@@ -1,0 +1,43 @@
+{% extends "users/admin_panel.html" %}
+{% block admin_panel %}
+    <div class="pt-4 ">
+        <div class="d-block overflow-auto position-relative" style="height:500px">
+            <table class="table-striped table table-dark table-hover mb-0">
+                <thead class="position-sticky">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">
+                            <a href="{% url 'create-permission-group' %}">Add Group</a>
+                        </th>
+                        <th scope="col"></th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group  in groups %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'edit-group' group.name %}">{{ group }}</a>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="{% url 'delete-group' group.name %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock admin_panel %}

@@ -1,0 +1,44 @@
+{% extends "work_hours/hours_navbar.html" %}
+{% block hour %}
+    <div class="bg border text-center rounded-5 cstm_clr">
+        <h3 class="pt-4">{{ title1 }}</h3>
+        <h4>{{ title2|title }}</h4>
+        <section class="w-100 p-4 d-flex justify-content-center pd-4">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Input:Email -->
+                <!-- Input:Password -->
+                <div>
+                    <label for="firstname" class="placeholder1">From</label>
+                    <input class="form-control"
+                           type="date"
+                           name="from"
+                           value="{{ first|date:'Y-m-d' }}"
+                           min="{{ mini|date:'Y-m-d' }}"
+                           max="{{ maxi|date:'Y-m-d' }}"/>
+                    <div class="cut"></div>
+                </div>
+                <div>
+                    <label for="firstname" class="placeholder1">to</label>
+                    <input class="form-control"
+                           type="date"
+                           name="to"
+                           min="{{ mini|date:'Y-m-d' }}"
+                           max="{{ maxi|date:'Y-m-d' }}"
+                           value="{{ last|date:'Y-m-d' }}"
+                           placeholder=" "/>
+                    <div class="cut"></div>
+                </div>
+                {% if used %}
+                    <div class="pt-4">
+                        <div class="form-control">{{ hour_text }}</div>
+                        <div class="form-control">{{ hour_text1 }}</div>
+                    </div>
+                {% endif %}
+                <div class="pt-4">
+                    <button type="submit" class="btn btn-primary btn-block mb-4 ">{{ button }}</button>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endblock hour %}

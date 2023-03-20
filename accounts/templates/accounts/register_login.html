@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+{% block mainapp %}
+    <style>
+  input[name="username"] {
+    text-transform: lowercase;
+  }
+    </style>
+    {% if register %}
+        <div class="bg border rounded-5 text-center cstm_clr ">
+            <h3 class="pt-4">{{ title1 }}</h3>
+            <h4>{{ title2|title }}</h4>
+            <section class="w-100 p-4 d-flex justify-content-center pd-4">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!-- Email input -->
+                    {% for field in form %}
+                        <div class="form-outline mb-4">
+                            {{ field }}
+                            <label class="form-label" for="form2Example1">{{ field.label }}</label>
+                        </div>
+                        {% for error in field.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
+                    {% endfor %}
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">{{ button }}</button>
+                </div>
+            </form>
+        </section>
+    </div>
+{% else %}
+    <div class="bg border rounded-5 text-center cstm_clr">
+        <h3 class="pt-4">Account Login</h3>
+        <h4>VHMS</h4>
+        <section class="w-100 p-4 d-flex justify-content-center pd-4">
+            <form method="POST" action="{% url 'login' %}">
+                {% csrf_token %}
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input type="email" id="form2Example1" name="username" class="form-control" />
+                    <label class="form-label" for="form2Example1">Email</label>
+                </div>
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <input type="password"
+                           id="form2Example2"
+                           name='password'
+                           class="form-control"/>
+                    <label class="form-label" for="form2Example2">Password</label>
+                </div>
+                <!-- 2 column grid layout for inline styling -->
+                <div class="row mb-4">
+                    <div class="col">
+                        <!-- Simple link -->
+                        <a href="#!">Forgot password?</a>
+                    </div>
+                </div>
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>
+                        Not a member? <a href="#">Register</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+{% endif %}
+{% endblock mainapp %}

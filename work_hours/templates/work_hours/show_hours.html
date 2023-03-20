@@ -1,0 +1,35 @@
+{% extends "work_hours/hours_navbar.html" %}
+{% block hour %}
+    <div class="pt-4 ">
+        <div class="d-block overflow-auto position-relative" style="height:500px">
+            <table class="table-striped table table-dark table-hover mb-0">
+                <thead class="position-sticky">
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col"></th>
+                        <th scope="col">Start</th>
+                        <th scope="col">End</th>
+                        <th scope="col"></th>
+                        <th scope="col">Day</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for hour in hours %}
+                        <tr>
+                            <td>{{ hour.date|date:"d/m/Y" }}</td>
+                            <td></td>
+                            <td>{{ hour.start_of_work|time:"H:i" }}</td>
+                            <td>{{ hour.end_of_work|time:"H:i" }}</td>
+                            <td></td>
+                            <td>{{ hour.get_day_display }}</td>
+                            <td>
+                                <a href="{% url 'delete-hour' hour.id %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock hour %}

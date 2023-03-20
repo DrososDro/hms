@@ -1,0 +1,57 @@
+{% extends "users/admin_panel.html" %}
+{% block admin_panel %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/forms.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/responsive.css' %}" />
+    <!--
+<link rel="stylesheet" href="/static/admin/css/base.css">
+<link rel="stylesheet" href="/static/admin/css/forms.css">
+<link rel="stylesheet" href="{% static 'styles/responsive.css' %}">-->
+    <script src="{% url 'javascript-catalog' %}"></script>
+    <script src="{% static 'js/core.js' %}"></script>
+    <script src="{% static 'js/SelectBox.js' %}"></script>
+    <script src="{% static 'js/actions.js' %}"></script>
+    <script src="{% static 'js/SelectFilter2.js' %}"></script>
+    <div class='pt-4'>
+        <form method="post" class="cstm_clr bg border rounded-5">
+            <h2 class=text-center>Permissions</h2>
+            {% csrf_token %}
+            <div>
+                <fieldset class="aligned bg border rounded-5">
+                    <div class="form-row field-name">
+                        <div>
+                            <label class="required" for="id_name">Username:</label>
+                            {{ form.username }}
+                        </div>
+                    </div>
+                    <div class="form-row field-groups">
+                        <div>
+                            <label for="id_groups">Groups:</label>
+                            <div class="related-widget-wrapper" data-model-ref="group">
+                                <select name="groups"
+                                        id="id_groups"
+                                        multiple
+                                        class="selectfilter"
+                                        data-field-name="groups"
+                                        data-is-stacked="0">
+                                    {% for group in form.groups %}{{ group }}{% endfor %}
+                                </select>
+                            </div>
+                            <div class="help" id="id_groups_helptext">
+                                The groups this user belongs to. A user will get all permissions
+                                granted to each of their groups. Hold down “Control”, or “Command”
+                                on a Mac, to select more than one.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end pt-4">
+                        <a class="btn btn-danger btn-block mb-4"
+                           href="javascript:history.go(-1);">Cancel</a>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+{% endblock admin_panel %}
