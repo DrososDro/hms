@@ -67,6 +67,9 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, perm, obj=None):
         return True
 
+    def full_name(self):
+        return f"{self.name} {self.surname}"
+
 
 class Perm(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)

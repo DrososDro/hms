@@ -123,6 +123,11 @@ def set_work_times(request):
 
 def calculate_hours(request):
     current_user = request.user
+
+    try:
+        time = WorkTime.objects.get(owner=current_user)
+    except Exception:
+        return redirect("set-work-hours")
     hours_text = ""
     hours_text1 = ""
     used = False
@@ -130,10 +135,6 @@ def calculate_hours(request):
     first = mini
     maxi = current_user.workcalc_set.last().date
     last = maxi
-    try:
-        time = WorkTime.objects.get(owner=current_user)
-    except Exception:
-        return redirect("set-work-hours")
 
     if request.method == "POST":
         id_from = datetime.strptime(

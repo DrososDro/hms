@@ -31,6 +31,7 @@ urlpatterns = [
     path("", home, name="home"),
     path("accounts/", include("accounts.urls")),
     path("work-hours/", include("work_hours.urls")),
+    path("houses/", include("houses.urls")),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

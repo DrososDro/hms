@@ -1,0 +1,43 @@
+{% extends "houses/house_navbar.html" %}
+{% block house %}
+    <div class="pt-4 ">
+        <div class="d-block overflow-auto position-relative" style="height:500px">
+            <table class="table-striped table table-dark table-hover mb-0">
+                <thead class="position-sticky">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">City</th>
+                        <th scope="col">T.K</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Number</th>
+                        <th scope="col">Owner</th>
+                        <th scope="col"></th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for house in houses %}
+                        <tr>
+                            <td>
+                                <a href="">{{ house.name|title }}</a>
+                            </td>
+                            <td>{{ house.city|title }}</td>
+                            <td>{{ house.post_ofice }}</td>
+                            <td>{{ house.address|title }}</td>
+                            <td>{{ house.number }}</td>
+                            <td>{{ house.owner.full_name }}</td>
+                            <td></td>
+                            <td>
+                                <a href="{% url 'edit-house' house.id %}">Edit</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete-house' house.id %}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock house %}

@@ -1,0 +1,34 @@
+{% extends "main.html" %}
+{% block mainapp %}
+    <nav class="navbar navbar-expand-lg  bg-dark navbar-dark ">
+        <div class="container-fluid">
+            <button class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown1"
+                    aria-controls="navbarNavDropdown"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown1">
+                {% with request.resolver_match.url_name as url_name %}
+                    <div class="navbar-nav">
+                        <a class="nav-link {% if url_name == 'add-payment' %}active{% endif %}"
+                           href="#">Add Payment</a>
+                        <a class="nav-link {% if url_name == 'show-payments' %}active{% endif %}"
+                           href="">Show Payments</a>
+                        <a class="nav-link {% if url_name == 'show-houses' %}active{% endif %}"
+                           href="{% url 'show-houses' %}">Show Houses</a>
+                        <a class="nav-link {% if url_name == 'show-payment-types' %}active{% endif %}"
+                           href="#">Show Pay Types</a>
+                    </div>
+                {% endwith %}
+            </div>
+        </div>
+    </nav>
+    <div class='pt-4'>
+        {% block house %}
+        {% endblock house %}
+    </div>
+{% endblock mainapp %}

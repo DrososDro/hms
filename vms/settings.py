@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "accounts.apps.AccountsConfig",
     "work_hours.apps.WorkHoursConfig",
+    "houses.apps.HousesConfig",
+    "payments.apps.PaymentsConfig",
 ]
 
 MIDDLEWARE = [
