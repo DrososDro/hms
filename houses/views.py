@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import AddHouseForm
+from payments.forms import AddPaymentForm
 from django.contrib import messages
 
 
@@ -24,7 +25,7 @@ def delete_house(request, pk):
     context = {
         "title": houses.name,
     }
-    return render(request, "houses/delete_form.html", context)
+    return render(request, "delete_form.html", context)
 
 
 def add_house(request):
@@ -37,14 +38,14 @@ def add_house(request):
             instance.owner = current_user
             instance.save()
             messages.success(request, "House successfully Added")
-            return redirect("show-houses")
+            return redirect("add-house-payment")
 
     context = {
         "form": form,
         "title2": "Add House",
         "button": "Submit",
     }
-    return render(request, "houses/payment.html", context)
+    return render(request, "houses/pay.html", context)
 
 
 def edit_house(request, pk):
@@ -62,7 +63,14 @@ def edit_house(request, pk):
 
     context = {
         "form": form,
-        "title2": "Add House",
+        "title2": "Edit House",
         "button": "Submit",
     }
-    return render(request, "houses/payment.html", context)
+    return render(request, "houses/pay.html", context)
+
+
+def add_payment(request):
+    form = AddPaymentForm()
+    context = {"form": form, "button": "Submit", "title2": "Add payment"}
+
+    return render(request, "houses/pay.html", context)

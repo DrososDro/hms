@@ -1,5 +1,6 @@
 from django.db import models
 import uuid
+from houses.models import House
 from accounts.models import Account
 
 # Create your models here.
@@ -19,6 +20,7 @@ class Payment(models.Model):
     price = models.FloatField()
     price_b = models.FloatField()
     payment = models.ForeignKey("PaymentType", on_delete=models.CASCADE)
+    house = models.ManyToManyField(House, blank=True)
 
 
 class PaymentType(models.Model):

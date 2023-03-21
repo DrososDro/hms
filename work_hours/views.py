@@ -38,7 +38,7 @@ def delete_hours(request, pk):
         "title": hour.date,
         "hour_url_list": url_list,
     }
-    return render(request, "work_hours/delete_form.html", context)
+    return render(request, "delete_form.html", context)
 
 
 def add_hours(request):

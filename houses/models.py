@@ -1,7 +1,6 @@
 from django.db import models
 import uuid
 from accounts.models import Account
-from payments.models import Payment
 
 # Create your models here.
 
@@ -15,4 +14,6 @@ class House(models.Model):
     address = models.CharField(max_length=100)
     number = models.CharField(max_length=100)
     owner = models.ForeignKey(Account, on_delete=models.CASCADE)
-    payments = models.ManyToManyField(Payment, blank=True)
+
+    def __str__(self) -> str:
+        return self.name

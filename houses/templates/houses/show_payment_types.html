@@ -18,14 +18,14 @@
                     {% for payment in payments %}
                         <tr>
                             <td>
-                                <a href="{% url 'filter-payments' payment.id %}">{{ payment.name|title }}</a>
+                                <a href="">{{ payment.name|title }}</a>
                             </td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>
-                                <a href="{% url 'edit-payment-type' payment.id %}">Edit</a>
+                                <a href="{% url 'edit-payment-types' payment.id %}">Edit</a>
                             </td>
                             <td>
                                 <a href="{% url 'delete-payment-type' payment.id %}">Delete</a>

@@ -8,7 +8,8 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       {% with request.resolver_match.url_name as url_name %}
       <div class="navbar-nav">
-        <a class="nav-link {% if url_name in house_url_list %}active{% endif %}" href="#">Houses</a>
+        <a class="nav-link {% if url_name in house_url_list %}active{% endif %}"
+          href="{% url 'show-houses' %}">Houses</a>
         <a class="nav-link {% if url_name in hour_url_list %}active{% endif %}" href="{% url 'show-hours' %}">Hours
           Calc</a>
         <a class="nav-link {% if url_name in vehicle_url_list %}active{% endif %}" href="#">Vehicles</a>
