@@ -2,9 +2,10 @@ from django.forms import widgets
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from datetime import timedelta, datetime
-from .models import WorkTime
+from .models import WorkTime, WorkCalc
 from .forms import AddHourForm, AddWorkTimes
 from .utils import minute_interval
+from accounts.decorators import authenticated_user, required_permissions
 
 url_list = [
     "show-hours",
@@ -16,6 +17,8 @@ url_list = [
 
 
 # Create your views here.
+@authenticated_user
+@required_permissions(["work"])
 def show_hours(request):
     current_user = request.user
     hours = current_user.workcalc_set.all()
@@ -26,6 +29,8 @@ def show_hours(request):
     return render(request, "work_hours/show_hours.html", context)
 
 
+@authenticated_user
+@required_permissions(["work"])
 def delete_hours(request, pk):
     current_user = request.user
     hour = current_user.workcalc_set.get(id=pk)
@@ -41,6 +46,8 @@ def delete_hours(request, pk):
     return render(request, "delete_form.html", context)
 
 
+@authenticated_user
+@required_permissions(["work"])
 def add_hours(request):
     current_user = request.user
     last = current_user.workcalc_set.all().last()
@@ -89,6 +96,8 @@ def add_hours(request):
     return render(request, "work_hours/add_hours.html", context)
 
 
+@authenticated_user
+@required_permissions(["work"])
 def set_work_times(request):
     current_user = request.user
     try:
@@ -121,13 +130,22 @@ def set_work_times(request):
     return render(request, "work_hours/add_hours.html", context)
 
 
+@authenticated_user
+@required_permissions(["work"])
 def calculate_hours(request):
     current_user = request.user
 
     try:
         time = WorkTime.objects.get(owner=current_user)
-    except Exception:
+    except WorkTime.DoesNotExist:
         return redirect("set-work-hours")
+
+    # here i tyl to see if there is any object and if there isnt redirect
+    try:
+        WorkCalc.objects.get(owner=current_user)
+    except WorkCalc.DoesNotExist:
+        return redirect("add-hours")
+
     hours_text = ""
     hours_text1 = ""
     used = False
@@ -170,10 +188,8 @@ def calculate_hours(request):
                     public_holidays += 1
 
         used = True
-        hours_text = (
-            f"Total days: {len(hours_list)}, Before work: {before}, Extra time: {after}"
-        )
-        hours_text1 = f"Work days: {work_days}, Weekend: {weekend}, Time off: {times_off}, Sick leave: {sick_leave}, Public holidays: {public_holidays}"
+        hours_text = f"Total days: {len(hours_list)},  Extra time: {after}, Work days: {work_days}"
+        hours_text1 = f" Weekend: {weekend}, Time off: {times_off}, Sick leave: {sick_leave}, Public holidays: {public_holidays}"
         first = hours_list.first().date
         last = hours_list.last().date
 

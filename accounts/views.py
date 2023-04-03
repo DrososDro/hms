@@ -15,6 +15,7 @@ def login_user(request):
                 username=request.POST["username"],
                 password=request.POST["password"],
             )
+
             login(request, user)
             messages.success(request, "You Successfuly login")
             return redirect("home")

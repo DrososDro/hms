@@ -2,9 +2,12 @@ from django.shortcuts import redirect, render
 from .forms import AddHouseForm
 from payments.forms import AddPaymentForm
 from django.contrib import messages
+from accounts.decorators import authenticated_user, required_permissions
 
 
 # Create your views here.
+@authenticated_user
+@required_permissions(["houses"])
 def show_houses(request):
     current_user = request.user
     houses = current_user.house_set.all()
@@ -15,6 +18,8 @@ def show_houses(request):
     return render(request, "houses/show_houses.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def delete_house(request, pk):
     current_user = request.user
     houses = current_user.house_set.get(id=pk)
@@ -28,6 +33,8 @@ def delete_house(request, pk):
     return render(request, "delete_form.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def add_house(request):
     current_user = request.user
     form = AddHouseForm()
@@ -48,6 +55,8 @@ def add_house(request):
     return render(request, "houses/pay.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def edit_house(request, pk):
     current_user = request.user
     house = current_user.house_set.get(id=pk)
@@ -69,8 +78,18 @@ def edit_house(request, pk):
     return render(request, "houses/pay.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def add_payment(request):
     form = AddPaymentForm()
+
+    if request.method == "POST":
+        form = AddPaymentForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            form.save()
+            return redirect("show-houses")
+
     context = {"form": form, "button": "Submit", "title2": "Add payment"}
 
     return render(request, "houses/pay.html", context)

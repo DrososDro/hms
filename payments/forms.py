@@ -21,7 +21,7 @@ class AddPaymentForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["id"]
         widgets = {
-            "house": forms.RadioSelect(attrs={"type": "radio"}),
+            "house": forms.Select(attrs={"type": "select"}),
             "date_of_payment": forms.DateInput(attrs={"type": "date"}),
         }
 
@@ -29,9 +29,16 @@ class AddPaymentForm(forms.ModelForm):
         super(AddPaymentForm, self).__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
+            """
             if name == "house":
                 field.widget.attrs.update({"class": "form-check-input"})
-                print(field.widget.attrs)
-                pass
             else:
                 field.widget.attrs.update({"class": "form-control"})
+            """
+            field.widget.attrs.update({"class": "form-control"})
+
+    def is_valid(self):
+        try:
+            super(AddPaymentForm, self).is_valid()
+        except Exception as e:
+            print(e)

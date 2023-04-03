@@ -1,46 +1,43 @@
 {% extends "houses/house_navbar.html" %}
 {% block house %}
-<style>
-  .form-check>input {
-    form-check-input
-  }
-</style>
-<div class="bg border text-center rounded-5 cstm_clr">
-  <h3 class="pt-4">{{ title1 }}</h3>
-  <h4>{{ title2|title }}</h4>
-  <section class="w-100 p-4 d-flex justify-content-center pd-4">
-    <form method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      {% for field in form %}
-      {% if field.label == "House" %}
-      <div class="form-check form-check-inline">
-        {% for radio in field %}
-        <div class="form-check form-check-inline">
-          <label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
-          {{ radio.tag|capfirst }}
-        </div>
-        {% endfor %}
-      </div>
-      <div class="form-outline mb-4">
-        <a href="{% url 'add-house' %}" class="text-start">+</a>
-        <label class="form-label" for="form2Example1">{{ field.label }}</label>
-        {% for error in field.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
-      </div>
-      {% elif field.label == "Payment type" %}
-      <div class="form-outline mb-4">
-        {{ field }}
-        <a href="{% url 'add-payment-type' %}" class="text-start">+</a>
-        <label class="form-label" for="form2Example1">{{ field.label }}</label>
-      </div>
-      {% else %}
-      <div class="form-outline mb-4">
-        {{ field }}
-        <label class="form-label" for="form2Example1">{{ field.label }}</label>
-      </div>
-      {% endif %}
-      {% endfor %}
-      <button type="submit" class="btn btn-primary btn-block mb-4">{{ button }}</button>
-    </form>
-  </section>
-</div>
+    <div class="bg border text-center rounded-5 cstm_clr">
+        <h3 class="pt-4">{{ title1 }}</h3>
+        <h4>{{ title2|title }}</h4>
+        <section class="w-100 p-4 d-flex justify-content-center pd-4">
+            <form method="POST" enctype="multipart/form-data" onclick="DoSubmit()">
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.label == "House" %}
+                        {{ field }}
+                        <div class="form-outline mb-4">
+                            <a href="{% url 'add-house' %}" class="text-start">+</a>
+                            <label class="form-label" for="form2Example1">{{ field.label }}</label>
+                            {% for error in field.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
+                        </div>
+                    {% elif field.label == "Payment type" %}
+                        <div class="form-outline mb-4">
+                            {{ field }}
+                            <a href="{% url 'add-payment-type' %}" class="text-start">+</a>
+                            <label class="form-label" for="form2Example1">{{ field.label }}</label>
+                        </div>
+                    {% else %}
+                        <div class="form-outline mb-4">
+                            {{ field }}
+                            <label class="form-label" for="form2Example1">{{ field.label }}</label>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <button type="submit" class="btn btn-primary btn-block mb-4">{{ button }}</button>
+            </form>
+        </section>
+    </div>
 {% endblock house %}
+<!--
+<div class="form-check form-check-inline">
+{% for radio in field %}
+<div class="form-check form-check-inline">
+<label class="form-check-label" for="{{ radio.id_for_label }}">{{ radio.choice_label }}</label>
+{{ radio.tag|capfirst }}
+</div>
+{% endfor %}
+</div>-->
