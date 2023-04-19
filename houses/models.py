@@ -26,10 +26,23 @@ class Payment(models.Model):
     ]
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
+    owner = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="owner",
+    )
+    render = models.ForeignKey(
+        Account,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name="render",
+    )
 
     house = models.ForeignKey(House, on_delete=models.CASCADE)
     payment_type = models.ForeignKey("PaymentType", on_delete=models.CASCADE)
-    render = models.ForeignKey(Account, on_delete=models.CASCADE, blank=True)
     payment = models.CharField(max_length=14, choices=CHOICE)
     file = models.FileField(blank=True, null=True)
     date_of_payment = models.DateField()

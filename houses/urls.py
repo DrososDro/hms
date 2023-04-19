@@ -10,6 +10,21 @@ urlpatterns = [
     path("add-payment-type/", views.add_payment_type, name="add-payment-type"),
     path("show-payments/", views.show_payments, name="show-payments"),
     path(
+        "show-payments-house/<str:pk>",
+        views.show_payments_from_houses,
+        name="show-payments-house",
+    ),
+    path(
+        "show-payments-render/<str:pk>",
+        views.show_payments_from_render,
+        name="show-payments-render",
+    ),
+    path(
+        "show-payments-payment-type/<str:pk>",
+        views.show_payments_from_payment_type,
+        name="show-payments-payment-type",
+    ),
+    path(
         "show-payment-types/",
         views.show_payment_types,
         name="show-payment-types",

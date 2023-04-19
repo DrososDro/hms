@@ -19,14 +19,20 @@
                     {% for payment in payments %}
                         <tr>
                             <td>
-                                <a href="#">{{ payment.house }}</a>
+                                <a href="{% url 'show-payments-house' payment.house.id %}">{{ payment.house }}</a>
                             </td>
                             <td>
-                                <a href="#">{{ payment.payment_type|title }}</a>
+                                <a href="{% url 'show-payments-payment-type' payment.payment_type.id %}">{{ payment.payment_type|title }}</a>
                             </td>
                             <td>{{ payment.price }}</td>
                             <td>{{ payment.price_b }}</td>
-                            <td>{{ payment.render.username }}</td>
+                            {% if payment.render  %}
+                                <td>
+                                    <a href="{% url 'show-payments-render' payment.render.id %}">{{ payment.render.username }}</a>
+                                </td>
+                            {% else %}
+              <td></td>
+                            {% endif %}
                             <td>{{ payment.payment }}</td>
                             <td>{{ payment.date_of_payment|date:"d/m/Y" }}</td>
                             {% if payment.file %}

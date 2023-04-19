@@ -32,7 +32,7 @@ class AddPaymentForm(forms.ModelForm):
     class Meta:
         model = Payment
         fields = "__all__"
-        exclude = ["id"]
+        exclude = ["id", "owner"]
         widgets = {
             "house": forms.Select(attrs={"type": "select"}),
             "date_of_payment": forms.DateInput(attrs={"type": "date"}),

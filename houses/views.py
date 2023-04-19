@@ -87,8 +87,10 @@ def add_payment(request):
         form = AddPaymentForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
-            return redirect("show-houses")
+            instance = form.save(commit=False)
+            instance.owner = request.user
+            instance.save()
+            return redirect("show-payments")
 
     context = {"form": form, "button": "Submit", "title2": "Add payment"}
 
@@ -159,6 +161,27 @@ def delete_payment_type(request, pk):
 @required_permissions(["houses"])
 def show_payments(request):
     current_user = request.user
-    payments = current_user.payment_set.all()
+    payments = current_user.owner.all()
+    context = {"payments": payments}  # , "house_url_list": url_list
+    return render(request, "houses/show_payments.html", context)
+
+
+def show_payments_from_houses(request, pk):
+    current_user = request.user
+    payments = current_user.owner.filter(house=pk)
+    context = {"payments": payments}  # , "house_url_list": url_list
+    return render(request, "houses/show_payments.html", context)
+
+
+def show_payments_from_render(request, pk):
+    current_user = request.user
+    payments = current_user.owner.filter(render=pk)
+    context = {"payments": payments}  # , "house_url_list": url_list
+    return render(request, "houses/show_payments.html", context)
+
+
+def show_payments_from_payment_type(request, pk):
+    current_user = request.user
+    payments = current_user.owner.filter(payment_type=pk)
     context = {"payments": payments}  # , "house_url_list": url_list
     return render(request, "houses/show_payments.html", context)
