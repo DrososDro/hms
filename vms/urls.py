@@ -32,7 +32,13 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("work-hours/", include("work_hours.urls")),
     path("houses/", include("houses.urls")),
-    path("payments/", include('payments.urls'))
 ]
+"""
+    path("admin/", admin.site.urls),
+    path("", home, name="home"),
+    path("accounts/", include("accounts.urls")),
+    path("work-hours/", include("work_hours.urls")),
+
+"""
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

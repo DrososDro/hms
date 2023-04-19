@@ -17,7 +17,7 @@
                         <a class="nav-link {% if url_name == 'add-payment' %}active{% endif %}"
                            href="{% url 'add-house-payment' %}">Add Payment</a>
                         <a class="nav-link {% if url_name == 'show-payments' %}active{% endif %}"
-                           href="">Show Payments</a>
+                           href="{% url 'show-payments' %}">Show Payments</a>
                         <a class="nav-link {% if url_name == 'show-houses' %}active{% endif %}"
                            href="{% url 'show-houses' %}">Show Houses</a>
                         <a class="nav-link {% if url_name == 'show-payment-types' %}active{% endif %}"
