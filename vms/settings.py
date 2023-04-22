@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-!u8j46!phn#-1x3tf9k8k&80*9dv9bp$793c$wy2r*!bm65j-z"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["hms.drosinakis.com"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "work_hours.apps.WorkHoursConfig",
     "houses.apps.HousesConfig",
     "vehicles.apps.VehiclesConfig",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -120,9 +121,36 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "/static/"
+MEDIS_URL = "/media/"
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+"""
+
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+"""
+STORAGES = {
+    "default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"},
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
+
+# AWS_S3_CUSTOM_DOMAIN = "https://minio.drosinakis.com"
+AWS_S3_ENDPOINT_URL = "https://minio.drosinakis.com"
+AWS_QUERYSTRING_AUTH = False
+AWS_DEFAULT_ACL = "public-read"
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_S3_FILE_OVERWRITE = False
+AWS_ACCESS_KEY_ID = "ilHjzibxYatpgmUu"
+AWS_SECRET_ACCESS_KEY = "3YoXG6uAcqaMR875ixfJQ7yDFV40xB3j"
+AWS_STORAGE_BUCKET_NAME = "hms"
+# AWS_S3_ENDPOINT_URL = "https://192.168.1.160:9000"
+AWS_S3_SIGNATURE_VERSION = "s3v4"
+AWS_S3_REGION_NAME = "Gr"

@@ -45,7 +45,7 @@ class Payment(models.Model):
         null=True,
         related_name="vehicle_render",
     )
-    file = models.FileField(blank=True, null=True)
+    file = models.FileField(blank=True, null=True, upload_to="vehicles")
     date_of_payment = models.DateField()
     price = models.FloatField()
     price_b = models.FloatField(blank=True, null=True)

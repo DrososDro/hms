@@ -1,0 +1,12 @@
+.background_image {
+  background: url(../images/mainclaas.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.cstm_clr {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+}
