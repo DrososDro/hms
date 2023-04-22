@@ -68,6 +68,8 @@ def edit_vehicle(request, pk):
     return render(request, "vehicles/pay.html", context)
 
 
+@authenticated_user
+@required_permissions(["vehicles"])
 def add_payment(request):
     form = AddPaymentForm()
 
