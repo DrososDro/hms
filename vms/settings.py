@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "work_hours.apps.WorkHoursConfig",
     "houses.apps.HousesConfig",
+    "vehicles.apps.VehiclesConfig",
 ]
 
 MIDDLEWARE = [

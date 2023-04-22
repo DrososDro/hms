@@ -1,16 +1,16 @@
-{% extends "houses/house_navbar.html" %}
+{% extends "vehicles/vehicle_navbar.html" %}
 {% block house %}
     <div class="pt-4 ">
         <div class="d-block overflow-auto position-relative" style="height:500px">
             <table class="table-striped table table-dark table-hover mb-0">
                 <thead class="position-sticky">
                     <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">City</th>
-                        <th scope="col">T.K</th>
-                        <th scope="col">Address</th>
-                        <th scope="col">Number</th>
+                        <th scope="col">Licence Plate</th>
+                        <th scope="col">Vin</th>
+                        <th scope="col">Brand</th>
+                        <th scope="col">Model</th>
                         <th scope="col">Owner</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col">Edit</th>
                         <th scope="col">Delete</th>
@@ -19,20 +19,18 @@
                 <tbody>
                     {% for house in houses %}
                         <tr>
-                            <td>
-                                <a href="">{{ house.name|title }}</a>
-                            </td>
-                            <td>{{ house.city|title }}</td>
-                            <td>{{ house.post_ofice }}</td>
-                            <td>{{ house.address|title }}</td>
-                            <td>{{ house.number }}</td>
+                            <td>{{ house.licence_plate|title }}</td>
+                            <td>{{ house.vin|title }}</td>
+                            <td>{{ house.brand }}</td>
+                            <td>{{ house.model|title }}</td>
                             <td>{{ house.owner.username }}</td>
                             <td></td>
+                            <td></td>
                             <td>
-                                <a href="{% url 'edit-house' house.id %}">Edit</a>
+                                <a href="{% url 'edit-vehicle' house.id %}">Edit</a>
                             </td>
                             <td>
-                                <a href="{% url 'delete-house' house.id %}">Delete</a>
+                                <a href="{% url 'delete-vehicle' house.id %}">Delete</a>
                             </td>
                         </tr>
                     {% endfor %}

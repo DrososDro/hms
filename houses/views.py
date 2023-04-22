@@ -5,15 +5,30 @@ from accounts.decorators import authenticated_user, required_permissions
 from .models import PaymentType
 
 
+url_list = [
+    "show-houses",
+    "delete-house",
+    "add-house",
+    "edit-house",
+    "add-house-payment",
+    "add-payment-type",
+    "show-payments",
+    "show-payments-house",
+    "show-payments-render",
+    "show-payments-payment-type",
+    "show-payment-types",
+    "edit-payment-types",
+    "delete-payment-type",
+]
+
+
 # Create your views here.
 @authenticated_user
 @required_permissions(["houses"])
 def show_houses(request):
     current_user = request.user
     houses = current_user.house_set.all()
-    context = {
-        "houses": houses,
-    }
+    context = {"houses": houses, "house_url_list": url_list}
 
     return render(request, "houses/show_houses.html", context)
 
@@ -27,9 +42,7 @@ def delete_house(request, pk):
         houses.delete()
         messages.success(request, "House successfully Deleted")
         return redirect("show-houses")
-    context = {
-        "title": houses.name,
-    }
+    context = {"title": houses.name, "house_url_list": url_list}
     return render(request, "delete_form.html", context)
 
 
@@ -51,8 +64,9 @@ def add_house(request):
         "form": form,
         "title2": "Add House",
         "button": "Submit",
+        "house_url_list": url_list,
     }
-    return render(request, "houses/pay.html", context)
+    return render(request, "pay.html", context)
 
 
 @authenticated_user
@@ -74,8 +88,9 @@ def edit_house(request, pk):
         "form": form,
         "title2": "Edit House",
         "button": "Submit",
+        "house_url_list": url_list,
     }
-    return render(request, "houses/pay.html", context)
+    return render(request, "pay.html", context)
 
 
 @authenticated_user
@@ -92,9 +107,14 @@ def add_payment(request):
             instance.save()
             return redirect("show-payments")
 
-    context = {"form": form, "button": "Submit", "title2": "Add payment"}
+    context = {
+        "form": form,
+        "button": "Submit",
+        "title2": "Add payment",
+        "house_url_list": url_list,
+    }
 
-    return render(request, "houses/pay.html", context)
+    return render(request, "pay.html", context)
 
 
 @authenticated_user
@@ -112,16 +132,17 @@ def add_payment_type(request):
         "form": form,
         "button": "Submit",
         "title2": "Add payment type",
+        "house_url_list": url_list,
     }
-    return render(request, "houses/pay.html", context)
+    return render(request, "pay.html", context)
 
 
 @authenticated_user
 @required_permissions(["houses"])
 def show_payment_types(request):
     payment = PaymentType.objects.all()
-    context = {"payments": payment}
-    return render(request, "houses/show_payment_types.html", context)
+    context = {"payments": payment, "house_url_list": url_list}
+    return render(request, "show_payment_types.html", context)
 
 
 @authenticated_user
@@ -140,8 +161,9 @@ def edit_payment_type(request, pk):
         "form": form,
         "button": "Submit",
         "title2": "Add payment type",
+        "house_url_list": url_list,
     }
-    return render(request, "houses/pay.html", context)
+    return render(request, "pay.html", context)
 
 
 @authenticated_user
@@ -153,7 +175,7 @@ def delete_payment_type(request, pk):
         messages.success(request, "successfully Delete the payment type")
         return redirect("show-payment-types")
 
-    context = {"title": payment.name}
+    context = {"title": payment.name, "house_url_list": url_list}
     return render(request, "delete_form.html", context)
 
 
@@ -162,26 +184,47 @@ def delete_payment_type(request, pk):
 def show_payments(request):
     current_user = request.user
     payments = current_user.owner.all()
-    context = {"payments": payments}  # , "house_url_list": url_list
+    context = {
+        "payments": payments,
+        "house_url_list": url_list,
+    }  # , "house_url_list": url_list
     return render(request, "houses/show_payments.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def show_payments_from_houses(request, pk):
     current_user = request.user
     payments = current_user.owner.filter(house=pk)
-    context = {"payments": payments}  # , "house_url_list": url_list
+    context = {
+        "payments": payments,
+        "house_url_list": url_list,
+    }  # , "house_url_list": url_list
     return render(request, "houses/show_payments.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def show_payments_from_render(request, pk):
     current_user = request.user
-    payments = current_user.owner.filter(render=pk)
-    context = {"payments": payments}  # , "house_url_list": url_list
+    if pk == "None":
+        payments = current_user.owner.filter(render=None)
+    else:
+        payments = current_user.owner.filter(render=pk)
+    context = {
+        "payments": payments,
+        "house_url_list": url_list,
+    }  # , "house_url_list": url_list
     return render(request, "houses/show_payments.html", context)
 
 
+@authenticated_user
+@required_permissions(["houses"])
 def show_payments_from_payment_type(request, pk):
     current_user = request.user
     payments = current_user.owner.filter(payment_type=pk)
-    context = {"payments": payments}  # , "house_url_list": url_list
+    context = {
+        "payments": payments,
+        "house_url_list": url_list,
+    }  # , "house_url_list": url_list
     return render(request, "houses/show_payments.html", context)

@@ -32,12 +32,14 @@ urlpatterns = [
     path("accounts/", include("accounts.urls")),
     path("work-hours/", include("work_hours.urls")),
     path("houses/", include("houses.urls")),
+    path("vehicles/", include("vehicles.urls")),
 ]
 """
     path("admin/", admin.site.urls),
     path("", home, name="home"),
     path("accounts/", include("accounts.urls")),
     path("work-hours/", include("work_hours.urls")),
+    path("vehicles/", include("vehicles.urls")),
 
 """
 

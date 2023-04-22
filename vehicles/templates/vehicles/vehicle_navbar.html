@@ -14,14 +14,14 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown1">
                 {% with request.resolver_match.url_name as url_name %}
                     <div class="navbar-nav">
-                        <a class="nav-link {% if url_name == 'add-house-payment' %}active{% endif %}"
-                           href="{% url 'add-house-payment' %}">Add Payment</a>
-                        <a class="nav-link {% if 'show-payments' in url_name %}active{% endif %}"
-                           href="{% url 'show-payments' %}">Show Payments</a>
-                        <a class="nav-link {% if url_name == 'show-houses' %}active{% endif %}"
-                           href="{% url 'show-houses' %}">Show Houses</a>
-                        <a class="nav-link {% if url_name == 'show-payment-types' %}active{% endif %}"
-                           href="{% url 'show-payment-types' %}">Show Pay Types</a>
+                        <a class="nav-link {% if url_name == 'add-vehicle-payment' %}active{% endif %}"
+                           href="{% url 'add-vehicle-payment' %}">Add Payment</a>
+                        <a class="nav-link {% if 'show-payment' in url_name %}active{% endif %}"
+                           href="{% url 'show-vehicle-payments' %}">Show Payments</a>
+                        <a class="nav-link {% if url_name == 'show-vehicles' %}active{% endif %}"
+                           href="{% url 'show-vehicles' %}">Show Vehicles</a>
+                        <a class="nav-link {% if url_name == 'show-vehicle-payment-types' %}active{% endif %}"
+                           href="{% url 'show-vehicle-payment-types' %}">Show Pay Types</a>
                     </div>
                 {% endwith %}
             </div>

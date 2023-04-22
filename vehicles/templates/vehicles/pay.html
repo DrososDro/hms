@@ -1,4 +1,4 @@
-{% extends "houses/house_navbar.html" %}
+{% extends "vehicles/vehicle_navbar.html" %}
 {% block house %}
     <div class="bg border text-center rounded-5 cstm_clr">
         <h3 class="pt-4">{{ title1 }}</h3>
@@ -14,10 +14,17 @@
                             <label class="form-label" for="form2Example1">{{ field.label }}</label>
                             {% for error in field.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
                         </div>
+                    {% elif field.label == "Vehicle" %}
+                        {{ field }}
+                        <div class="form-outline mb-4">
+                            <a href="{% url 'add-vehicle' %}" class="text-start">+</a>
+                            <label class="form-label" for="form2Example1">{{ field.label }}</label>
+                            {% for error in field.errors %}<p style="color: red">{{ error }}</p>{% endfor %}
+                        </div>
                     {% elif field.label == "Payment type" %}
                         <div class="form-outline mb-4">
                             {{ field }}
-                            <a href="{% url 'add-payment-type' %}" class="text-start">+</a>
+                            <a href="{% url 'add-vehicle-payment-type' %}" class="text-start">+</a>
                             <label class="form-label" for="form2Example1">{{ field.label }}</label>
                         </div>
                     {% else %}
