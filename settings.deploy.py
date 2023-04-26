@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-!u8j46!phn#-1x3tf9k8k&80*9dv9bp$793c$wy2r*!bm65j-z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["192.168.1.163", "hms.drosinakis.com"]
+CSRF_TRUSTED_ORIGINS = ["https://hms.drosinakis.com"]
+
 
 # Application definition
 
@@ -77,6 +79,7 @@ WSGI_APPLICATION = "vms.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
+"""
 
 DATABASES = {
     "default": {
@@ -84,6 +87,20 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+"""
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "hms",
+        "USER": "hmsuser",
+        "PASSWORD": "ZiSvPLqjX7LLMgrHxKjSKWxZm",
+        "HOST": "localhost",
+        "PORT": "",
+    }
+}
+
+
 AUTH_USER_MODEL = "accounts.Account"
 
 # Password validation
@@ -142,15 +159,15 @@ STORAGES = {
     },
 }
 
-SESSION_COOKIE_AGE = 1 * 3600  # 1 is the housrs 3600 is the second the time have
+SESSION_COOKIE_AGE = 1 * 3600  # 1 = hours 3600 = the sec 1 hour have
 CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 # AWS_S3_CUSTOM_DOMAIN = "https://minio.drosinakis.com"
 AWS_S3_ENDPOINT_URL = "https://minio.drosinakis.com"
 AWS_QUERYSTRING_AUTH = False
 AWS_DEFAULT_ACL = "public-read"
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_S3_FILE_OVERWRITE = False
+AWS_S3_FILE_OVERWRITE = False
 AWS_ACCESS_KEY_ID = "ilHjzibxYatpgmUu"
 AWS_SECRET_ACCESS_KEY = "3YoXG6uAcqaMR875ixfJQ7yDFV40xB3j"
 AWS_STORAGE_BUCKET_NAME = "hms"
