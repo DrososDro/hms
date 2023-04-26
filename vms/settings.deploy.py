@@ -20,7 +20,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-!u8j46!phn#-1x3tf9k8k&80*9dv9bp$793c$wy2r*!bm65j-z"
+# SECRET_KEY = "django-insecure-!u8j46!phn#-1x3tf9k8k&80*9dv9bp$793c$wy2r*!bm65j-z"
+try:
+    SECRET_KEY = os.environ["SECRET_KEY"]
+except KeyError as e:
+    raise RuntimeError("Could not find a SECRET_KEY in environment") from e
+
+"""
+$ echo "export SECRET_KEY='$(openssl rand -hex 40)'" > .DJANGO_SECRET_KEY
+$ source .DJANGO_SECRET_KEY
+You can cat the contents of .DJANGO_SECRET_KEY to see that openssl has generated a cryptographically secure hex string key:
+
+$ cat .DJANGO_SECRET_KEY
+
+"""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -46,6 +59,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -162,6 +176,11 @@ STORAGES = {
 SESSION_COOKIE_AGE = 1 * 3600  # 1 = hours 3600 = the sec 1 hour have
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+
+# Content Security Policy
+CSP_IMG_SRC = "'self'"
+CSP_STYLE_SRC = "'self'"
+CSP_SCRIPT_SRC = "'self'"
 
 # AWS_S3_CUSTOM_DOMAIN = "https://minio.drosinakis.com"
 AWS_S3_ENDPOINT_URL = "https://minio.drosinakis.com"

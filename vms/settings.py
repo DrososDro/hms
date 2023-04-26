@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "csp.middleware.CSPMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -144,6 +145,11 @@ STORAGES = {
 
 SESSION_COOKIE_AGE = 1 * 3600  # 1 is the housrs 3600 is the second the time have
 CSRF_COOKIE_SECURE = True
+
+# Content Security Policy
+CSP_IMG_SRC = "'self'"
+CSP_STYLE_SRC = "'self'"
+CSP_SCRIPT_SRC = "'self'"
 
 # AWS_S3_CUSTOM_DOMAIN = "https://minio.drosinakis.com"
 AWS_S3_ENDPOINT_URL = "https://minio.drosinakis.com"
