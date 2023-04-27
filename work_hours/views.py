@@ -142,7 +142,7 @@ def calculate_hours(request):
 
     # here i tyl to see if there is any object and if there isnt redirect
     try:
-        WorkCalc.objects.get(owner=current_user)
+        WorkCalc.objects.filter(owner=current_user)
     except WorkCalc.DoesNotExist:
         return redirect("add-hours")
 
